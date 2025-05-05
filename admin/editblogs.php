@@ -1,0 +1,119 @@
+<?php
+session_start();
+include_once '../dbconnection.php';
+if (empty($_SESSION['admin_session'])) {
+    header('Location:login.php');
+}
+
+?>
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=0">
+    <title>Enviro - Dashboard</title>
+
+    <link rel="shortcut icon" href="../img/logop.png">
+    <link rel="stylesheet"
+        href="https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,500;0,600;0,700;1,400&display=swap">
+    <link rel="stylesheet" href="assets/plugins/bootstrap/css/bootstrap.min.css">
+    <link rel="stylesheet" href="assets/plugins/fontawesome/css/fontawesome.min.css">
+    <link rel="stylesheet" href="assets/plugins/fontawesome/css/all.min.css">
+    <link rel="stylesheet" href="assets/plugins/datatables/datatables.min.css">
+    <link rel="stylesheet" href="assets/css/style.css">
+</head>
+
+<body>
+    <div class="main-wrapper">
+        <?php include 'top.php'; ?>
+        <?php include 'sidebar.php'; ?>
+
+        <div class="page-wrapper">
+            <div class="content container-fluid">
+                <div class="page-header">
+                    <div class="row align-items-center">
+                        <div class="col">
+                            <h3 class="page-title">Update Blogs</h3>
+                            <ul class="breadcrumb">
+                                <li class="breadcrumb-item"><a href="products.php">Blogs</a></li>
+                                <li class="breadcrumb-item active">Update Blogs</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-sm-12">
+                        <div class="card">
+                            <div class="card-body">
+                                <form action="updateblogs.php" method="post" enctype="multipart/form-data">
+                                    <div class="row">
+                                        <div class="col-12">
+                                            <h5 class="form-title"><span>Blogs Information</span></h5>
+                                        </div>
+
+                                        <?php
+                                        include_once '../dbconnection.php';
+
+                                        $blogs_id = $_GET['id'];
+                                        $sql = "SELECT * FROM blogs WHERE id=$blogs_id";
+                                        $result = $conn->query($sql);
+                                        $blogs = $result->fetch_assoc();
+                                        ?>
+
+                                        <input type="hidden" name="id" value="<?php echo $blogs['id']; ?>">
+                                        <div class="col-12 col-sm-6">
+                                            <div class="form-group">
+                                                <label>Heading Name</label>
+                                                <input type="text" name="heading" class="form-control"
+                                                    value="<?php echo $blogs['heading']; ?>" required>
+                                            </div>
+                                        </div>
+
+                                        <div class="col-12 col-sm-6">
+                                            <div class="form-group">
+                                                <label>Upload Photo</label>
+                                                <input type="file" class="form-control" name="image">
+                                            </div>
+                                        </div>
+
+                                        <div class="col-12 col-sm-6">
+                                            <div class="form-group">
+                                                <label>Description</label>
+                                                <textarea name="description" class="form-control" rows="6"
+                                                    required><?php echo $blogs['description']; ?></textarea>
+                                            </div>
+                                        </div>
+
+                                        <div class="col-12">
+                                            <button type="submit" name="submit" class="btn btn-primary">Submit</button>
+                                        </div>
+                                    </div>
+                                </form>
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+
+            <footer>
+                <p>Copyright © 2024.</p>
+            </footer>
+        </div>
+    </div>
+
+    <script type="text/javascript" src="assets/ckeditor/ckeditor.js"></script>
+    <!-- Scripts  -->
+    <script src="assets/js/jquery-3.5.1.min.js"></script>
+    <script src="assets/js/popper.min.js"></script>
+    <script src="assets/plugins/bootstrap/js/bootstrap.min.js"></script>
+    <script src="assets/plugins/slimscroll/jquery.slimscroll.min.js"></script>
+    <script src="assets/plugins/datatables/datatables.min.js"></script>
+    <script src="assets/js/script.js"></script>
+</body>
+
+</html>

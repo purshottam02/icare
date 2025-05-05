@@ -1,0 +1,17 @@
+<div class="col-12 col-sm-6">
+ 
+                                            <?php
+                                            $categorynm = mysqli_fetch_assoc(mysqli_query($conn, "SELECT * FROM `addshop` ORDER BY `addshop`.`id` DESC"))['area'];
+                                            $categorynm = (int)$categorynm;  // Ensure it's an integer
+                                            $jobid = $categorynm + 001;
+                                            $jobNo = strtoupper($jobfirst . '00' . $jobid);
+                                            ?>
+
+
+                                            <div class="form-group">
+                                                <label>Job No:</label>
+                                                <input type="text" name="reference" value="<?= $jobNo  ?>" class="form-control" readonly>
+
+                                            </div>
+
+                                        </div>
